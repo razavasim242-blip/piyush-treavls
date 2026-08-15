@@ -1,0 +1,979 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Piyush Travel | Digital Services & Travel Hub</title>
+    <meta name="description" content="Piyush Travel - Bagahi Bazar Main Market. Recharge, Aadhaar, PAN, Passport, Printing, Bill Payment aur Travel related services.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&family=Rajdhani:wght@400;500;600;700&family=Noto+Sans+Devanagari:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --neon-cyan: #00f5ff;
+            --neon-pink: #ff00aa;
+            --neon-purple: #b026ff;
+            --neon-blue: #0066ff;
+            --neon-green: #39ff14;
+            --dark-bg: #0a0a12;
+            --darker-bg: #05050a;
+            --card-bg: rgba(15, 15, 30, 0.85);
+            --text-main: #e0e0ff;
+            --text-muted: #a0a0c0;
+            --glow-cyan: 0 0 10px #00f5ff, 0 0 20px #00f5ff, 0 0 40px rgba(0, 245, 255, 0.3);
+            --glow-pink: 0 0 10px #ff00aa, 0 0 20px #ff00aa, 0 0 40px rgba(255, 0, 170, 0.3);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Rajdhani', 'Noto Sans Devanagari', sans-serif;
+            background: var(--dark-bg);
+            color: var(--text-main);
+            line-height: 1.6;
+            overflow-x: hidden;
+            background-image: 
+                radial-gradient(ellipse at 20% 20%, rgba(0, 102, 255, 0.15) 0%, transparent 50%),
+                radial-gradient(ellipse at 80% 80%, rgba(176, 38, 255, 0.12) 0%, transparent 50%),
+                radial-gradient(ellipse at 50% 50%, rgba(255, 0, 170, 0.08) 0%, transparent 60%);
+            min-height: 100vh;
+        }
+
+        /* Scanline overlay */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: repeating-linear-gradient(
+                0deg,
+                transparent,
+                transparent 2px,
+                rgba(0, 0, 0, 0.03) 2px,
+                rgba(0, 0, 0, 0.03) 4px
+            );
+            pointer-events: none;
+            z-index: 9999;
+        }
+
+        /* ===== HEADER ===== */
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+            background: rgba(5, 5, 15, 0.92);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(0, 245, 255, 0.25);
+            box-shadow: 0 0 30px rgba(0, 245, 255, 0.1);
+        }
+
+        .header-inner {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 0.85rem 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 1rem;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            text-decoration: none;
+        }
+
+        .logo-icon {
+            width: 48px;
+            height: 48px;
+            background: linear-gradient(135deg, var(--neon-cyan), var(--neon-purple));
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Orbitron', sans-serif;
+            font-weight: 800;
+            font-size: 1.1rem;
+            color: #000;
+            box-shadow: var(--glow-cyan);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .logo-icon::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(45deg, transparent 40%, rgba(255,255,255,0.3) 50%, transparent 60%);
+            animation: shine 3s infinite;
+        }
+
+        @keyframes shine {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
+        }
+
+        .logo-text {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .logo-text .main {
+            font-family: 'Orbitron', sans-serif;
+            font-weight: 700;
+            font-size: 1.25rem;
+            letter-spacing: 1.5px;
+            background: linear-gradient(90deg, var(--neon-cyan), var(--neon-pink));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .logo-text .sub {
+            font-size: 0.7rem;
+            color: var(--neon-cyan);
+            letter-spacing: 2px;
+            opacity: 0.85;
+        }
+
+        nav {
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+            flex-wrap: wrap;
+        }
+
+        nav a {
+            color: var(--text-main);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.95rem;
+            padding: 0.45rem 0.9rem;
+            border-radius: 50px;
+            transition: all 0.3s ease;
+            border: 1px solid transparent;
+            position: relative;
+        }
+
+        nav a:hover, nav a.active {
+            color: var(--neon-cyan);
+            border-color: var(--neon-cyan);
+            box-shadow: 0 0 15px rgba(0, 245, 255, 0.4);
+            background: rgba(0, 245, 255, 0.08);
+        }
+
+        nav a.btn-recharge {
+            background: linear-gradient(90deg, var(--neon-pink), var(--neon-purple));
+            color: #fff;
+            border: none;
+            box-shadow: var(--glow-pink);
+        }
+
+        nav a.btn-recharge:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 0 25px rgba(255, 0, 170, 0.6);
+            color: #fff;
+        }
+
+        .menu-toggle {
+            display: none;
+            background: none;
+            border: 1px solid var(--neon-cyan);
+            color: var(--neon-cyan);
+            padding: 0.5rem 0.75rem;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1.3rem;
+        }
+
+        /* ===== HERO ===== */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            padding: 7rem 1.5rem 4rem;
+            overflow: hidden;
+        }
+
+        .hero-bg {
+            position: absolute;
+            inset: 0;
+            background: 
+                linear-gradient(180deg, rgba(10,10,18,0.3) 0%, rgba(10,10,18,0.85) 100%),
+                url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><rect fill="%230a0a12" width="100" height="100"/><path d="M0 50h100M50 0v100" stroke="%2300f5ff" stroke-width="0.3" opacity="0.15"/></svg>');
+            background-size: cover, 60px 60px;
+            z-index: 0;
+        }
+
+        .hero-content {
+            max-width: 1100px;
+            width: 100%;
+            text-align: center;
+            position: relative;
+            z-index: 2;
+        }
+
+        .hero-badge {
+            display: inline-block;
+            padding: 0.4rem 1.2rem;
+            border: 1px solid var(--neon-cyan);
+            border-radius: 50px;
+            font-size: 0.85rem;
+            color: var(--neon-cyan);
+            margin-bottom: 1.5rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            box-shadow: 0 0 15px rgba(0, 245, 255, 0.3);
+            animation: pulse-glow 2s infinite;
+        }
+
+        @keyframes pulse-glow {
+            0%, 100% { box-shadow: 0 0 10px rgba(0, 245, 255, 0.3); }
+            50% { box-shadow: 0 0 25px rgba(0, 245, 255, 0.6); }
+        }
+
+        .hero h1 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: clamp(2.2rem, 6vw, 3.8rem);
+            font-weight: 800;
+            line-height: 1.15;
+            margin-bottom: 1rem;
+            background: linear-gradient(90deg, #fff, var(--neon-cyan), var(--neon-pink));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-shadow: 0 0 40px rgba(0, 245, 255, 0.3);
+        }
+
+        .hero p {
+            font-size: 1.25rem;
+            color: var(--text-muted);
+            max-width: 650px;
+            margin: 0 auto 2rem;
+        }
+
+        .hero-btns {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.85rem 1.8rem;
+            border-radius: 50px;
+            font-weight: 700;
+            font-size: 1.05rem;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+            font-family: inherit;
+        }
+
+        .btn-primary {
+            background: linear-gradient(90deg, var(--neon-cyan), var(--neon-blue));
+            color: #000;
+            box-shadow: var(--glow-cyan);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px) scale(1.03);
+            box-shadow: 0 0 30px rgba(0, 245, 255, 0.7);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: var(--neon-pink);
+            border: 2px solid var(--neon-pink);
+            box-shadow: 0 0 15px rgba(255, 0, 170, 0.3);
+        }
+
+        .btn-secondary:hover {
+            background: rgba(255, 0, 170, 0.15);
+            transform: translateY(-3px);
+            box-shadow: 0 0 25px rgba(255, 0, 170, 0.5);
+        }
+
+        /* Floating particles */
+        .particles {
+            position: absolute;
+            inset: 0;
+            overflow: hidden;
+            z-index: 1;
+        }
+
+        .particle {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: var(--neon-cyan);
+            border-radius: 50%;
+            opacity: 0.6;
+            animation: float 12s infinite linear;
+        }
+
+        @keyframes float {
+            0% { transform: translateY(100vh) rotate(0deg); opacity: 0; }
+            10% { opacity: 0.6; }
+            90% { opacity: 0.6; }
+            100% { transform: translateY(-20vh) rotate(720deg); opacity: 0; }
+        }
+
+        /* ===== SECTIONS COMMON ===== */
+        section {
+            padding: 5rem 1.5rem;
+            position: relative;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .section-title h2 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: clamp(1.8rem, 4vw, 2.6rem);
+            font-weight: 700;
+            margin-bottom: 0.75rem;
+            background: linear-gradient(90deg, var(--neon-cyan), var(--neon-pink));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .section-title p {
+            color: var(--text-muted);
+            font-size: 1.1rem;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .section-title .line {
+            width: 80px;
+            height: 3px;
+            background: linear-gradient(90deg, var(--neon-cyan), var(--neon-pink));
+            margin: 1rem auto 0;
+            border-radius: 3px;
+            box-shadow: 0 0 10px var(--neon-cyan);
+        }
+
+        /* ===== SERVICES ===== */
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .service-card {
+            background: var(--card-bg);
+            border: 1px solid rgba(0, 245, 255, 0.2);
+            border-radius: 16px;
+            padding: 1.75rem;
+            transition: all 0.35s ease;
+            position: relative;
+            overflow: hidden;
+            backdrop-filter: blur(8px);
+        }
+
+        .service-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: linear-gradient(90deg, var(--neon-cyan), var(--neon-pink), var(--neon-purple));
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .service-card:hover {
+            transform: translateY(-8px);
+            border-color: var(--neon-cyan);
+            box-shadow: 0 10px 40px rgba(0, 245, 255, 0.2), 0 0 20px rgba(0, 245, 255, 0.1);
+        }
+
+        .service-card:hover::before {
+            opacity: 1;
+        }
+
+        .service-icon {
+            width: 60px;
+            height: 60px;
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.8rem;
+            margin-bottom: 1.2rem;
+            background: linear-gradient(135deg, rgba(0, 245, 255, 0.15), rgba(176, 38, 255, 0.15));
+            border: 1px solid rgba(0, 245, 255, 0.3);
+            color: var(--neon-cyan);
+        }
+
+        .service-card h3 {
+            font-size: 1.3rem;
+            font-weight: 700;
+            margin-bottom: 0.6rem;
+            color: #fff;
+        }
+
+        .service-card p {
+            color: var(--text-muted);
+            font-size: 0.98rem;
+            margin-bottom: 1rem;
+        }
+
+        .service-card .tag {
+            display: inline-block;
+            font-size: 0.75rem;
+            padding: 0.25rem 0.7rem;
+            border-radius: 20px;
+            background: rgba(0, 245, 255, 0.1);
+            color: var(--neon-cyan);
+            border: 1px solid rgba(0, 245, 255, 0.25);
+        }
+
+        /* ===== WHY US ===== */
+        .why-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .why-card {
+            text-align: center;
+            padding: 2rem 1.5rem;
+            background: var(--card-bg);
+            border-radius: 16px;
+            border: 1px solid rgba(176, 38, 255, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        .why-card:hover {
+            border-color: var(--neon-purple);
+            box-shadow: 0 0 30px rgba(176, 38, 255, 0.2);
+            transform: translateY(-5px);
+        }
+
+        .why-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            filter: drop-shadow(0 0 8px var(--neon-pink));
+        }
+
+        .why-card h3 {
+            font-size: 1.2rem;
+            margin-bottom: 0.6rem;
+            color: var(--neon-cyan);
+        }
+
+        .why-card p {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+        }
+
+        /* ===== ABOUT / LOCATION ===== */
+        .about-section {
+            background: linear-gradient(180deg, transparent, rgba(0, 102, 255, 0.05), transparent);
+        }
+
+        .about-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            align-items: center;
+        }
+
+        .about-text h3 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.6rem;
+            margin-bottom: 1rem;
+            color: var(--neon-pink);
+        }
+
+        .about-text p {
+            color: var(--text-muted);
+            margin-bottom: 1rem;
+            font-size: 1.05rem;
+        }
+
+        .location-box {
+            background: var(--card-bg);
+            border: 1px solid rgba(0, 245, 255, 0.25);
+            border-radius: 16px;
+            padding: 2rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .location-box::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle, rgba(0, 245, 255, 0.1), transparent 70%);
+        }
+
+        .location-box h4 {
+            font-size: 1.2rem;
+            color: var(--neon-cyan);
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .location-box p {
+            color: var(--text-main);
+            font-size: 1.1rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .location-box .address {
+            font-size: 1.15rem;
+            font-weight: 600;
+            color: #fff;
+            margin: 1rem 0;
+            line-height: 1.5;
+        }
+
+        /* ===== CONTACT ===== */
+        .contact-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2.5rem;
+        }
+
+        .contact-card {
+            background: var(--card-bg);
+            border: 1px solid rgba(0, 245, 255, 0.2);
+            border-radius: 16px;
+            padding: 2rem;
+            text-align: center;
+            transition: all 0.3s;
+        }
+
+        .contact-card:hover {
+            border-color: var(--neon-cyan);
+            box-shadow: 0 0 25px rgba(0, 245, 255, 0.2);
+        }
+
+        .contact-card .icon {
+            font-size: 2.2rem;
+            margin-bottom: 1rem;
+            color: var(--neon-cyan);
+            filter: drop-shadow(0 0 8px var(--neon-cyan));
+        }
+
+        .contact-card h3 {
+            font-size: 1.15rem;
+            margin-bottom: 0.5rem;
+            color: #fff;
+        }
+
+        .contact-card a, .contact-card p {
+            color: var(--text-muted);
+            text-decoration: none;
+            font-size: 1.05rem;
+            transition: color 0.3s;
+        }
+
+        .contact-card a:hover {
+            color: var(--neon-cyan);
+        }
+
+        .whatsapp-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.7rem;
+            background: linear-gradient(90deg, #25D366, #128C7E);
+            color: #fff;
+            padding: 1rem 2.2rem;
+            border-radius: 50px;
+            font-weight: 700;
+            font-size: 1.15rem;
+            text-decoration: none;
+            box-shadow: 0 0 25px rgba(37, 211, 102, 0.4);
+            transition: all 0.3s;
+            margin-top: 1rem;
+        }
+
+        .whatsapp-btn:hover {
+            transform: translateY(-3px) scale(1.04);
+            box-shadow: 0 0 40px rgba(37, 211, 102, 0.6);
+        }
+
+        /* ===== FOOTER ===== */
+        footer {
+            background: var(--darker-bg);
+            border-top: 1px solid rgba(0, 245, 255, 0.2);
+            padding: 2.5rem 1.5rem;
+            text-align: center;
+        }
+
+        footer .logo-text .main {
+            font-size: 1.1rem;
+        }
+
+        footer p {
+            color: var(--text-muted);
+            margin-top: 1rem;
+            font-size: 0.95rem;
+        }
+
+        footer .links {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            margin: 1.2rem 0;
+            flex-wrap: wrap;
+        }
+
+        footer .links a {
+            color: var(--text-muted);
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        footer .links a:hover {
+            color: var(--neon-cyan);
+        }
+
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 900px) {
+            .about-content {
+                grid-template-columns: 1fr;
+            }
+
+            nav {
+                display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                width: 100%;
+                background: rgba(5, 5, 15, 0.98);
+                flex-direction: column;
+                padding: 1rem;
+                border-bottom: 1px solid rgba(0, 245, 255, 0.3);
+            }
+
+            nav.open {
+                display: flex;
+            }
+
+            .menu-toggle {
+                display: block;
+            }
+
+            .header-inner {
+                flex-wrap: wrap;
+            }
+        }
+
+        @media (max-width: 600px) {
+            .hero {
+                padding-top: 6rem;
+            }
+
+            .hero h1 {
+                font-size: 1.9rem;
+            }
+
+            .btn {
+                padding: 0.75rem 1.4rem;
+                font-size: 0.95rem;
+            }
+        }
+
+        /* Neon text utility */
+        .neon-text {
+            text-shadow: 0 0 7px var(--neon-cyan), 0 0 15px var(--neon-cyan);
+        }
+    </style>
+</head>
+<body>
+    <!-- HEADER -->
+    <header>
+        <div class="header-inner">
+            <a href="#home" class="logo">
+                <div class="logo-icon">PT</div>
+                <div class="logo-text">
+                    <span class="main">PIYUSH TRAVEL</span>
+                    <span class="sub">DIGITAL HUB</span>
+                </div>
+            </a>
+            <button class="menu-toggle" onclick="document.querySelector('nav').classList.toggle('open')">☰</button>
+            <nav>
+                <a href="#home" class="active">होम</a>
+                <a href="#services">हमारी सेवाएं</a>
+                <a href="#why">हमारे बारे में</a>
+                <a href="#contact">हमसे संपर्क करें</a>
+                <a href="#services">ऑनलाइन सेवाएँ</a>
+                <a href="#recharge" class="btn-recharge">रिचार्ज</a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- HERO -->
+    <section class="hero" id="home">
+        <div class="hero-bg"></div>
+        <div class="particles" id="particles"></div>
+        <div class="hero-content">
+            <div class="hero-badge">✦ Bagahi Bazar Digital Hub ✦</div>
+            <h1>PIYUSH TRAVEL</h1>
+            <p>आपकी सभी डिजिटल जरूरतें एक ही जगह — Recharge, Aadhaar, PAN, Passport, Printing, Bill Payment और Travel Services</p>
+            <div class="hero-btns">
+                <a href="#services" class="btn btn-primary">सेवाएं देखें</a>
+                <a href="https://wa.me/917763890336" target="_blank" class="btn btn-secondary">WhatsApp पर बात करें</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- SERVICES -->
+    <section id="services">
+        <div class="container">
+            <div class="section-title">
+                <h2>हमारी सेवाएं</h2>
+                <p>आपकी सभी जरूरतें, एक ही स्थान पर — तेज़, आसान और भरोसेमंद</p>
+                <div class="line"></div>
+            </div>
+            <div class="services-grid">
+                <div class="service-card" id="recharge">
+                    <div class="service-icon">📱</div>
+                    <h3>Mobile Recharge</h3>
+                    <p>सभी नेटवर्क का Instant Mobile Recharge। Cashback के साथ तेज़ सेवा।</p>
+                    <span class="tag">Instant + Cashback</span>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">📺</div>
+                    <h3>DTH Recharge</h3>
+                    <p>Tata Play, Airtel, Dish TV, Sun Direct — सभी DTH का Recharge एक क्लिक में।</p>
+                    <span class="tag">All Operators</span>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">🆔</div>
+                    <h3>Aadhaar / PAN / Voter</h3>
+                    <p>Aadhaar Update, PAN Card Apply, Voter ID Correction और नई आवेदन सेवा।</p>
+                    <span class="tag">Government Forms</span>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">🛂</div>
+                    <h3>Passport Services</h3>
+                    <p>Passport Apply, Renewal, Police Verification और Related Form Filling।</p>
+                    <span class="tag">Travel Ready</span>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">🖨️</div>
+                    <h3>Printing Services</h3>
+                    <p>रंगीन और सादा Printing, Photocopy, Scanning और Document Services।</p>
+                    <span class="tag">Color & B/W</span>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">💡</div>
+                    <h3>Bill Payment</h3>
+                    <p>Electricity, Water, Gas, Mobile Postpaid और अन्य सभी बिल का भुगतान।</p>
+                    <span class="tag">All Bills</span>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">✈️</div>
+                    <h3>Travel & Tickets</h3>
+                    <p>Train, Bus, Flight Ticket Booking और Travel Related Documents।</p>
+                    <span class="tag">Piyush Travel</span>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">📝</div>
+                    <h3>Online Form Filling</h3>
+                    <p>कोई भी Online Form, Scholarship, Job Application, Exam Form — हम भरवाते हैं।</p>
+                    <span class="tag">Any Form</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- WHY US -->
+    <section id="why">
+        <div class="container">
+            <div class="section-title">
+                <h2>हमारे साथ क्यों?</h2>
+                <p>Piyush Travel को चुनने के कई कारण</p>
+                <div class="line"></div>
+            </div>
+            <div class="why-grid">
+                <div class="why-card">
+                    <div class="why-icon">⚡</div>
+                    <h3>तेज़ और भरोसेमंद</h3>
+                    <p>सबसे तेज़ सेवा ताकि आपका कीमती समय बचे। हर काम समय पर पूरा।</p>
+                </div>
+                <div class="why-card">
+                    <div class="why-icon">🎯</div>
+                    <h3>आसान प्रक्रिया</h3>
+                    <p>सरल और सीधी प्रक्रिया। कोई उलझन नहीं — सिर्फ आओ, काम करवाओ और जाओ।</p>
+                </div>
+                <div class="why-card">
+                    <div class="why-icon">👨‍💻</div>
+                    <h3>अनुभवी स्टाफ</h3>
+                    <p>अनुभवी और प्रशिक्षित टीम जो हर काम को कुशलता और ध्यान से करती है।</p>
+                </div>
+                <div class="why-card">
+                    <div class="why-icon">💰</div>
+                    <h3>सस्ती और पारदर्शी</h3>
+                    <p>उचित कीमतें। कोई छिपी हुई लागत नहीं। जो कहा जाता है वही चार्ज होता है।</p>
+                </div>
+                <div class="why-card">
+                    <div class="why-icon">📍</div>
+                    <h3>सुविधाजनक लोकेशन</h3>
+                    <p>Bagahi Bazar Main Market, Post Office के ठीक सामने — आसानी से पहुँच सकते हो।</p>
+                </div>
+                <div class="why-card">
+                    <div class="why-icon">❤️</div>
+                    <h3>ग्राहक संतुष्टि</h3>
+                    <p>आपकी संतुष्टि ही हमारी सफलता है। हर ग्राहक को बेहतरीन सेवा देने का वादा।</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ABOUT / LOCATION -->
+    <section class="about-section" id="about">
+        <div class="container">
+            <div class="section-title">
+                <h2>हमारे बारे में</h2>
+                <div class="line"></div>
+            </div>
+            <div class="about-content">
+                <div class="about-text">
+                    <h3>Piyush Travel — Digital Services Hub</h3>
+                    <p>हम Bagahi Bazar Main Market में स्थित एक भरोसेमंद Digital Services Center हैं। हमारा लक्ष्य है कि आपके सभी ऑनलाइन और ऑफलाइन डिजिटल काम एक ही जगह आसानी से हो जाएँ।</p>
+                    <p>Mobile Recharge से लेकर Passport, Aadhaar, PAN, Ticket Booking और Printing तक — हम आपको पूरा सपोर्ट देते हैं।</p>
+                    <p>आओ और अनुभव करो आसान, तेज़ और भरोसेमंद सेवा।</p>
+                </div>
+                <div class="location-box">
+                    <h4>📍 हमारी लोकेशन</h4>
+                    <p class="address">Bagahi Bazar Main Market<br>Post Office के सामने<br>Bagahi Bazar</p>
+                    <p style="margin-top: 1.2rem; color: var(--neon-cyan);">🕒 रोज खुला • सुबह से शाम तक</p>
+                    <p style="margin-top: 0.5rem;">आस-पास के लोगों के लिए सबसे नज़दीकी और विश्वसनीय Digital Point</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CONTACT -->
+    <section id="contact">
+        <div class="container">
+            <div class="section-title">
+                <h2>हमसे संपर्क करें</h2>
+                <p>कोई भी सवाल हो या सेवा चाहिए — तुरंत संपर्क करें</p>
+                <div class="line"></div>
+            </div>
+            <div class="contact-grid">
+                <div class="contact-card">
+                    <div class="icon">📞</div>
+                    <h3>Mobile Number</h3>
+                    <a href="tel:+917763890336">+91 7763890336</a>
+                </div>
+                <div class="contact-card">
+                    <div class="icon">✉️</div>
+                    <h3>Email</h3>
+                    <a href="mailto:razav75@gmail.com">razav75@gmail.com</a>
+                </div>
+                <div class="contact-card">
+                    <div class="icon">📍</div>
+                    <h3>Address</h3>
+                    <p>Bagahi Bazar Main Market<br>Post Office ke Samne</p>
+                </div>
+            </div>
+            <div style="text-align: center;">
+                <a href="https://wa.me/917763890336?text=Namaste%2C%20Piyush%20Travel%20se%20sampark%20kar%20raha%20hoon" target="_blank" class="whatsapp-btn">
+                    <span>💬</span> WhatsApp पर मैसेज करें
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer>
+        <div class="logo-text" style="justify-content: center; display: flex; flex-direction: column; align-items: center;">
+            <span class="main">PIYUSH TRAVEL</span>
+            <span class="sub">DIGITAL SERVICES HUB</span>
+        </div>
+        <div class="links">
+            <a href="#home">होम</a>
+            <a href="#services">सेवाएं</a>
+            <a href="#why">हमारे बारे में</a>
+            <a href="#contact">संपर्क</a>
+        </div>
+        <p>© 2026 Piyush Travel • Bagahi Bazar Main Market • All Rights Reserved</p>
+        <p style="margin-top: 0.4rem; font-size: 0.85rem; opacity: 0.7;">Made with ⚡ Cyberpunk Vibes</p>
+    </footer>
+
+    <script>
+        // Particles
+        const particlesContainer = document.getElementById('particles');
+        for (let i = 0; i < 25; i++) {
+            const p = document.createElement('div');
+            p.className = 'particle';
+            p.style.left = Math.random() * 100 + '%';
+            p.style.animationDelay = Math.random() * 12 + 's';
+            p.style.animationDuration = (8 + Math.random() * 10) + 's';
+            p.style.background = Math.random() > 0.5 ? '#00f5ff' : '#ff00aa';
+            p.style.width = p.style.height = (2 + Math.random() * 3) + 'px';
+            particlesContainer.appendChild(p);
+        }
+
+        // Active nav on scroll
+        const sections = document.querySelectorAll('section[id]');
+        const navLinks = document.querySelectorAll('nav a');
+
+        window.addEventListener('scroll', () => {
+            let current = '';
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop - 120;
+                if (scrollY >= sectionTop) {
+                    current = section.getAttribute('id');
+                }
+            });
+            navLinks.forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href') === '#' + current) {
+                    link.classList.add('active');
+                }
+            });
+        });
+
+        // Close mobile menu on link click
+        document.querySelectorAll('nav a').forEach(link => {
+            link.addEventListener('click', () => {
+                document.querySelector('nav').classList.remove('open');
+            });
+        });
+    </script>
+</body>
+</html>
